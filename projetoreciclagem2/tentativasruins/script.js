@@ -1,0 +1,55 @@
+// Recuperar os dados salvos no localStorage ao carregar a páginaoo
+window.onload = function () {
+  saveFormData();
+};
+
+function cadastrarDados() {
+  var email = document.getElementById("email").value;
+  var endereco = document.getElementById("endereco").value;
+
+  if (email && endereco) {
+    // Cria um objeto representando o dado
+    var novoDado = {
+      email: email,
+      endereco: endereco,
+    };
+
+    // Salva o dado no localStorage
+    salvarDado(novoDado);
+
+    // Adiciona o dado à lista na interface
+    adicionarDadoNaLista(novoDado);
+
+    // Limpa o formulário após o cadastro
+    document.getElementById("email").value = "";
+    document.getElementById("endereco").value = "";
+  } else {
+    alert("Preencha todos os campos do formulário.");
+  }
+}
+
+function adicionarDadoNaLista(dado) {
+  var listaDados = document.getElementById("listaDados");
+  var novoDado = document.createElement("li");
+  novoDado.innerHTML = `<strong>${dado.email}</strong>: ${dado.endereco}`;
+  listaDados.appendChild(novoDado);
+}
+
+function salvarVaga(dado) {
+  // Recupera os dados salvos no localStorage
+  var dadosSalvos = JSON.parse(localStorage.getItem("dados")) || [];
+
+  // Adiciona os dados à lista de vagas
+  dadosSalvos.push(dado);
+
+  // Salva a lista atualizada no localStorage
+  localStorage.setItem("dados", JSON.stringify(vagasSalvas));
+}
+
+function saveFormData() {
+  // Recupera as vagas salvas no localStorage
+  var dadosSalvos = JSON.parse(localStorage.getItem("dados")) || [];
+
+  // Adiciona as vagas à lista na interface
+  dadosSalvos.forEach(adicionarDadoNaLista(dado));
+}
